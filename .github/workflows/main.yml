@@ -3,7 +3,7 @@ name: Python CI/CD Pipeline
 on:
   push:
     branches:
-      - main   # trigger on push to main
+      - main   
 
 jobs:
   test-script:   
@@ -18,9 +18,9 @@ jobs:
           python-version: "3.11"
 
       - name: Run Python script
-        run: python hello.py   # assumes script is hello.py in repo root
+        run: python hello.py   
 
-  create_artifact:   # ✅ job 2 (note: job names can't have `-` if you reference them in needs)
+  create_artifact:
     runs-on: ubuntu-latest
     needs: test-script   # depends on job 1
     steps:
