@@ -1,0 +1,34 @@
+name: Python CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main   # trigger on push to main
+
+jobs:
+  test-script:   
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Run Python script
+        run: python hello.py   # assumes script is hello.py in repo root
+
+  create_artifact:   # ✅ job 2 (note: job names can't have `-` if you reference them in needs)
+    runs-on: ubuntu-latest
+    needs: test-script   # depends on job 1
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: hello-world-artifact
+          path: hello.py   # or path to folder if you want more files
